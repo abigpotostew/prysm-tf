@@ -1,3 +1,0 @@
-[submodule "terraform-google-sql"]
-	path = terraform-google-sql
-	url = https://github.com/abigpotostew/terraform-google-sql
