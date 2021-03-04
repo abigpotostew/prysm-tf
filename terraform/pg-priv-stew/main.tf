@@ -72,7 +72,8 @@ module "project-factory" {
   activate_apis = [
     "servicenetworking.googleapis.com",
     "compute.googleapis.com",
-    "appengine.googleapis.com"
+    "appengine.googleapis.com",
+    "vpcaccess.googleapis.com"
   ]
   activate_api_identities = [
     {
@@ -103,10 +104,24 @@ module "sql_example_postgres_private_ip" {
   }
 }
 
-resource "google_vpc_access_connector" "connector" {
-  name = "priv-db-vpc-con"
-  ip_cidr_range = "${module.sql_example_postgres_private_ip.master_private_ip}/28"
-  //
-  network = module.sql_example_postgres_private_ip.master_private_ip
-}
+//todo this is conflicting with the existing db connection
+# resource "google_vpc_access_connector" "connector" {
+#   name = "prysm-priv-vpc-connector"
 
+#   // replace the last subnet with a 0
+#   ip_cidr_range = "10.168.0.0/28"//join("",[cidrhost("${module.sql_example_postgres_private_ip.master_private_ip}/28", 0), "/28"])
+#   //
+#   network = module.sql_example_postgres_private_ip.private_network_name
+#   region = var.region
+#   project = module.project-factory.project_id
+# }
+
+
+resource "google_vpc_access_connector" "serverless_vpc_connector" {
+  provider = "google-beta"
+  name = "prysm-priv-vpc-connector"
+  region = var.region
+  ip_cidr_range = "72.29.167.0/28" //pick a random ip range???
+  network = module.sql_example_postgres_private_ip.private_network_name
+  project = module.project-factory.project_id
+}

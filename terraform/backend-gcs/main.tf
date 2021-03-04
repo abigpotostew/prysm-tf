@@ -44,7 +44,7 @@ resource "random_string" "tf-backend_suffix" {
 
 
 module "project-factory" {
-  source = "..\/..\/.."
+  source = "../project-factory"
   random_project_id = false
   name = local.project_name
   org_id = var.organization_id

@@ -88,7 +88,7 @@ resource "google_resource_manager_lien" "lien" {
   APIs configuration
  *****************************************/
 module "project_services" {
-  source = "..\/project_services"
+  source = "../project_services"
 
   project_id                  = google_project.main.project_id
   activate_apis               = local.activate_apis

@@ -84,4 +84,11 @@ resource "google_app_engine_standard_app_version" "backend_v1" {
 
   delete_service_on_destroy = true
   //  noop_on_destroy = true
+
+  // opens the private db to app engine
+  vpc_access_connector{
+    name= google_vpc_access_connector.serverless_vpc_connector.id
+    //"projects/${module.project-factory.project_id}/locations/${var.region}/connectors/${module.sql_example_postgres_private_ip.connector_name}"
+  }
+  //todo pass in the private ip of the db
 }
