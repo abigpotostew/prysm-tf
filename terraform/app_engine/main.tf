@@ -41,7 +41,7 @@ resource "random_string" "suffix" {
 }
 
 module "app-engine-project" {
-  source = "../../"
+  source = "..\/..\/.."
   name = local.project_id
   random_project_id = false
   org_id = var.org_id
@@ -61,7 +61,7 @@ resource "google_project_service" "servicenetworking" {
 }
 
 module "app-engine" {
-  source = "../../modules/app_engine"
+  source = "..\/..\/..\/modules\/app_engine"
   project_id = local.project_id
   location_id = "us-west2"
 }

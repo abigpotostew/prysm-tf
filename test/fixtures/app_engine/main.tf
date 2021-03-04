@@ -15,7 +15,7 @@
  */
 
 module "app-eng" {
-  source          = "../../../examples/app_engine"
+  source          = "..\/..\/..\/examples\/terraform\/app_engine"
   org_id          = var.org_id
   folder_id       = var.folder_id
   billing_account = var.billing_account

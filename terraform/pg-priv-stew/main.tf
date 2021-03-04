@@ -61,7 +61,7 @@ resource "random_string" "app_engine_backend_suffix" {
 }
 
 module "project-factory" {
-  source = "../../"
+  source = "..\/..\/.."
   random_project_id = true
   name = local.project_name
   org_id = var.organization_id
@@ -87,7 +87,7 @@ module "project-factory" {
 
 module "sql_example_postgres_private_ip" {
 
-  source = "../../terraform-google-sql" // from git submodule clone in root
+  source = "..\/..\/..\/terraform-google-sql" // from git submodule clone in root
 
   # insert the 6 required variables here
   master_user_password = var.master_user_password

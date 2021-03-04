@@ -1,6 +1,6 @@
 
 module "postgresql-db" {
-  source               = "../../modules/postgresql"
+  source               = "..\/..\/..\/modules\/postgresql"
   name                 = var.db_name
   random_instance_name = true
   database_version     = "POSTGRES_9_6"
