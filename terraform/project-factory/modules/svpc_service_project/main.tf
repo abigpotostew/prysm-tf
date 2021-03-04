@@ -18,7 +18,7 @@
   Organization info retrieval
  *****************************************/
 module "gsuite_group" {
-  source = "../gsuite_group"
+  source = "..\/gsuite_group"
 
   domain = var.domain
   name   = var.group_name
@@ -26,7 +26,7 @@ module "gsuite_group" {
 }
 
 module "project-factory" {
-  source = "../core_project_factory"
+  source = "..\/core_project_factory"
 
   group_email                       = module.gsuite_group.email
   group_role                        = var.group_role
@@ -64,7 +64,7 @@ module "project-factory" {
   Setting API service accounts for shared VPC
  *****************************************/
 module "shared_vpc_access" {
-  source                             = "../shared_vpc_access"
+  source                             = "..\/shared_vpc_access"
   host_project_id                    = var.shared_vpc
   enable_shared_vpc_service_project  = true
   service_project_id                 = module.project-factory.project_id
@@ -79,7 +79,7 @@ module "shared_vpc_access" {
   Billing budget to create if amount is set
  *****************************************/
 module "budget" {
-  source        = "../budget"
+  source        = "..\/budget"
   create_budget = var.budget_amount != null
 
   projects                         = [module.project-factory.project_id]

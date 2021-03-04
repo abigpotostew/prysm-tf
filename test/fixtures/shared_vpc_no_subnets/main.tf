@@ -42,7 +42,7 @@ provider "random" {
 }
 
 module "project-factory" {
-  source = "../../../modules/gsuite_enabled"
+  source = "..\/..\/..\/terraform\/project-factory\/modules/gsuite_enabled"
 
   name                              = "pf-ci-test-nosubnets-${var.random_string_for_testing}"
   project_id                        = "pf-ci-test-nosubnets-${var.random_string_for_testing}"

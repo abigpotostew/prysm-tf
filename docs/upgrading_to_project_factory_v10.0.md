@@ -2,7 +2,7 @@
 
 The v10.0 release of Project Factory is a backwards incompatible release for
 all modules since the breaking change is on
-[core_project_factory](../modules/core_project_factory) module which removes the
+[core_project_factory](../terraform/project-factory/modules/core_project_factory) module which removes the
 need of gcloud and local-execs.
 
 ## Migration Instructions
@@ -10,7 +10,7 @@ need of gcloud and local-execs.
 Remove any references to `skip_gcloud_download` and `use_tf_google_credentials_env_var` if applicable.
 
 ### Shared VPC Host Project variable
-Previously, the [Project Factory module](../README.md) had an input `var.shared_vpc` that took the ID of the host project which hosts the shared VPC. This variable has now been renamed to `var.svpc_host_project_id` in v10.0 of Project Factory for clarity.
+Previously, the [Project Factory module](../terraform/project-factory/README.md) had an input `var.shared_vpc` that took the ID of the host project which hosts the shared VPC. This variable has now been renamed to `var.svpc_host_project_id` in v10.0 of Project Factory for clarity.
 
 ```diff
  module "project-factory" {
@@ -36,7 +36,7 @@ Previously, the [Project Factory module](../README.md) had an input `var.shared_
 ```
 
 ### Shared VPC Service Project submodule
-The [`svpc_service_project`](../modules/svpc_service_project) submodule performs the same functions as the root module with the addition of assigning the project as a Shared VPC service project. Note that this submodule was previously an internal submodule named `shared_vpc` and has been externalized and renamed in the v10.0 release of Project Factory. See the [submodule documentation](../modules/svpc_service_project) for usage information and [../examples/shared_vpc](../examples/shared_vpc) for a full example.
+The [`svpc_service_project`](../terraform/project-factory/modules/svpc_service_project) submodule performs the same functions as the root module with the addition of assigning the project as a Shared VPC service project. Note that this submodule was previously an internal submodule named `shared_vpc` and has been externalized and renamed in the v10.0 release of Project Factory. See the [submodule documentation](../terraform/project-factory/modules/svpc_service_project) for usage information and [../examples/shared_vpc](../examples/shared_vpc) for a full example.
 
 ## Upgrade provider version
 

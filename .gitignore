@@ -1,4 +1,4 @@
-.terraform
+terraform/project-factory/.terraform
 .env
 .idea
 .backup

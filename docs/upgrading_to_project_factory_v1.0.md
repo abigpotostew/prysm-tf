@@ -61,7 +61,7 @@ module "project-factory-gsuite" {
 
 Update the project-factory module source to the Project Factory v1.0.0 release.
 
-Note that any projects which depend on G Suite features must be updated to point to the [gsuite-enabled submodule](../modules/gsuite_enabled).
+Note that any projects which depend on G Suite features must be updated to point to the [gsuite-enabled submodule](../terraform/project-factory/modules/gsuite_enabled).
 
 ```diff
 diff --git i/main.tf w/main.tf
@@ -291,7 +291,7 @@ Error: module "project-pfactory-development": "create_group" is not a valid argu
 ```
 
 These are related to projects which depend on G Suite functionality.
-Make sure to update the source of such projects to point to the [G Suite module](../modules/gsuite_enabled)
+Make sure to update the source of such projects to point to the [G Suite module](../terraform/project-factory/modules/gsuite_enabled)
 
 ### Missing `org_id`
 

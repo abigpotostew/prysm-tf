@@ -33,7 +33,7 @@ resource "gsuite_group_member" "service_account_sa_group_member" {
   G Suite group information retrieval
  *****************************************/
 module "gsuite_group" {
-  source = "../gsuite_group"
+  source = "..\/gsuite_group"
 
   domain = var.domain
   name   = local.group_name
@@ -63,7 +63,7 @@ resource "gsuite_group_member" "api_s_account_api_sa_group_member" {
 }
 
 module "project-factory" {
-  source = "../core_project_factory/"
+  source = "..\/core_project_factory"
 
   group_email = element(
     compact(
@@ -106,7 +106,7 @@ module "project-factory" {
   Billing budget to create if amount is set
  *****************************************/
 module "budget" {
-  source        = "../budget"
+  source        = "..\/budget"
   create_budget = var.budget_amount != null
 
   projects                         = [module.project-factory.project_id]

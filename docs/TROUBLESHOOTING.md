@@ -151,7 +151,7 @@ If you encounter a `401: Unauthorized`, likely it is because domain wide
 delegation is not granted to the Seed Service Account, and it will fail to
 obtain the access token needed to interact with the Directory API and fail.
 
-See the [README G Suite documentation](../README.md#g-suite) for more
+See the [README G Suite documentation](../terraform/project-factory/README.md#g-suite) for more
 information.
 
 **Solution:**
@@ -261,7 +261,7 @@ Project. If these APIs are not enabled, the Project Factory may fail to generate
 resources, or generate incomplete resources.
 
 A canonical list of required APIs is available in the
-[README](../README.md#apis).
+[README](../terraform/project-factory/README.md#apis).
 
 * [cloudresourcemanager.googleapis.com](#missing-api-cloudresourcemanagergoogleapiscom)
 * [cloudbilling.googleapis.com](#missing-api-cloudbillinggoogleapiscom)
@@ -504,7 +504,7 @@ Error: Error applying plan:
 The Directory Admin API is not enabled on the Seed Project, which prevents
 management of G Suite resources.
 
-See the [README G Suite documentation](../README.md#g-suite) for more
+See the [README G Suite documentation](../terraform/project-factory/README.md#g-suite) for more
 information.
 
 **Solution:**
@@ -528,7 +528,7 @@ The Seed Service Account must have the following roles in order to fully create
 a Project Factory.
 
 A canonical list of required roles is available in the
-[README](../README.md#permissions)
+[README](../terraform/project-factory/README.md#permissions)
 
 * Organizational roles
     * [roles/resourcemanager.organizationViewer](#missing-org-role-rolesresourcemanagerorganizationviewer)

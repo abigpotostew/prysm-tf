@@ -1,7 +1,7 @@
 # Upgrading to Project Factory v9.0
 
 The v9.0 release of Project Factory is a backwards incompatible release for
-service projects created with [shared_vpc](../modules/shared_vpc) module that
+service projects created with [shared_vpc](../terraform/project-factory/modules/shared_vpc) module that
 also have `container.googleapis.com` and/or `dataproc.googleapis.com` API's
 enabled. If you don't have these API's enabled on your service projects or you
 are creating new projects then there is no action required on your end.

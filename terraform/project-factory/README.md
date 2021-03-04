@@ -1,6 +1,6 @@
 # Google Cloud Project Factory Terraform Module
 
-[FAQ](./docs/FAQ.md) | [Troubleshooting Guide](./docs/TROUBLESHOOTING.md) |
+[FAQ](../../docs/FAQ.md) | [Troubleshooting Guide](../../docs/TROUBLESHOOTING.md) |
 [Glossary][glossary].
 
 This module allows you to create opinionated Google Cloud Platform projects. It
@@ -19,7 +19,7 @@ intended for Terraform 0.12.x is [9.2.0].
 
 ## Upgrading
 
-See the [docs](./docs) for detailed instructions on upgrading between major releases of the module.
+See the [docs](../../docs) for detailed instructions on upgrading between major releases of the module.
 
 ## Usage
 
@@ -217,7 +217,7 @@ following roles:
 
 #### Script Helper
 
-A [helper script](./helpers/setup-sa.sh) is included to create the Seed Service
+A [helper script](../../helpers/setup-sa.sh) is included to create the Seed Service
 Account in the [Seed Project](https://github.com/terraform-google-modules/terraform-google-project-factory/blob/master/docs/GLOSSARY.md#seed-project),
 grant the necessary roles to the [Seed Service Account](https://github.com/terraform-google-modules/terraform-google-project-factory/blob/master/docs/GLOSSARY.md#seed-service-account),
 and enable the necessary API's in the Seed Project.  Run it as follows:
@@ -293,20 +293,20 @@ In order to operate the Project Factory, you must activate the following APIs on
 the base project where the Service Account was created:
 
 - Cloud Resource Manager API - `cloudresourcemanager.googleapis.com`
-  [troubleshooting](docs/TROUBLESHOOTING.md#missing-api-cloudresourcemanagergoogleapiscom)
+  [troubleshooting](../../docs/TROUBLESHOOTING.md#missing-api-cloudresourcemanagergoogleapiscom)
 - Cloud Billing API - `cloudbilling.googleapis.com`
-  [troubleshooting](docs/TROUBLESHOOTING.md#missing-api-cloudbillinggoogleapiscom)
+  [troubleshooting](../../docs/TROUBLESHOOTING.md#missing-api-cloudbillinggoogleapiscom)
 - Identity and Access Management API - `iam.googleapis.com`
-  [troubleshooting](docs/TROUBLESHOOTING.md#missing-api-iamgoogleapiscom)
+  [troubleshooting](../../docs/TROUBLESHOOTING.md#missing-api-iamgoogleapiscom)
 - Admin SDK - `admin.googleapis.com`
-  [troubleshooting](docs/TROUBLESHOOTING.md#missing-api-admingoogleapiscom)
+  [troubleshooting](../../docs/TROUBLESHOOTING.md#missing-api-admingoogleapiscom)
 
 #### Optional APIs
 
 - Google App Engine Admin API - `appengine.googleapis.com`
-  [troubleshooting](docs/TROUBLESHOOTING.md#missing-api-appenginegoogleapiscom)
+  [troubleshooting](../../docs/TROUBLESHOOTING.md#missing-api-appenginegoogleapiscom)
   - Please note that if you are deploying an App Engine Flex application, you should not delete the default compute service account
-    (as is default behavior). Please see the [troubleshooting doc](docs/TROUBLESHOOTING.md#cannot-deploy-app-engine-flex-application) for more information.
+    (as is default behavior). Please see the [troubleshooting doc](../../docs/TROUBLESHOOTING.md#cannot-deploy-app-engine-flex-application) for more information.
 - Cloud Billing Budget API - `billingbudgets.googleapis.com`
   - Please note this API is only required if configuring budgets for projects.
 
@@ -353,7 +353,7 @@ binary here:
 - https://releases.hashicorp.com/terraform/
 
 [gsuite-enabled-module]: modules/gsuite_enabled/README.md
-[preconditions-checker-script]: helpers/preconditions/preconditions.py
+[preconditions-checker-script]: ../../helpers/preconditions/preconditions.py
 [terraform-provider-google]: https://github.com/terraform-providers/terraform-provider-google
 [terraform-provider-google-beta]: https://github.com/terraform-providers/terraform-provider-google-beta
 [terraform-provider-gsuite]: https://github.com/DeviaVir/terraform-provider-gsuite

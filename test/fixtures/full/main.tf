@@ -96,7 +96,7 @@ module "vpc" {
 }
 
 module "project-factory" {
-  source = "../../../modules/gsuite_enabled"
+  source = "..\/..\/..\/terraform\/project-factory\/modules/gsuite_enabled"
 
   name              = "pf-ci-test-full-name-${var.random_string_for_testing}"
   random_project_id = "false"
