@@ -2,4 +2,6 @@
 .env
 .idea
 .backup
-.env
+terraform.tfstate.backup
+terraform.tfstate
+.terraform.lock.hcl
