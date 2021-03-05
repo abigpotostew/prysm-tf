@@ -6,7 +6,6 @@ module "app-engine" {
   source = "../project-factory/modules/app_engine"
   project_id = module.project-factory.project_id
   location_id = var.location_id
-
 }
 
 resource "google_storage_bucket_object" "object" {

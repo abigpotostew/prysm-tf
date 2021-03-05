@@ -15,7 +15,7 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket = "prysm-tf-state-i8xw"
+    bucket = "prysm-tfstate-8cf0"
     prefix = "terraform/state"
 //    credentials = "~/.config/gcloud/application_default_credentials.json"
   }
@@ -56,6 +56,8 @@ module "project-factory" {
   credentials_path = local.credentials_file_path
   default_service_account = "deprivilege"
 
+//  folder_id=var.folder_id
+
   activate_apis = [
     "servicenetworking.googleapis.com",
     "compute.googleapis.com",
@@ -89,6 +91,7 @@ locals {
 resource "google_compute_network" "private_network" {
   provider = google-beta
   name = local.private_network_name
+  project =  module.project-factory.project_id
 }
 
 # Reserve global internal address range for the peering

@@ -16,11 +16,14 @@ variable "zone" {
 variable "organization_id" {
   type = string
 }
-variable "credentials_path"{
+variable "group_org_admins"{
+  type=string
+}
+variable "group_billing_admins"{
+  type=string
+}
+
+variable "credentials_path" {
   type=string
   default="~/.config/gcloud/application_default_credentials.json"
-}
-variable "namespace"{
-  type=string
-  description = "project and bucket name prefix"
 }
