@@ -20,3 +20,7 @@ variable "credentials_path"{
   type=string
   default="~/.config/gcloud/application_default_credentials.json"
 }
+variable "namespace"{
+  type=string
+  description = "project and bucket name prefix"
+}

@@ -19,11 +19,6 @@ variable "namespace" {
   type = string
 }
 
-variable "org_id" {
-  description = "The organization ID."
-  type        = string
-}
-
 variable "folder_id" {
   description = "The ID of a folder to host this project."
   type        = string
@@ -54,10 +49,10 @@ variable "network_name" {
 }
 
 variable "db_name" {
-  description="database name"
-  type=string
-  default = "prysm-main"
+  description = "Name of your database. Needs to follow MySQL identifier rules: https://dev.mysql.com/doc/refman/5.7/en/identifiers.html"
+  type        = string
 }
+
 variable "authorized_networks" {
   type = list(map(string))
   default=[]
@@ -75,4 +70,12 @@ variable "master_user_password"{
 variable "master_user_name"{
   type=string
   default="postgres"
+}
+variable "db_bastion_members"{
+  type=list(string)
+  default=[]
+}
+variable "db_machine_type"{
+  default="db-f1-micro"
+  description = "database machine type"
 }
