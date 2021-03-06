@@ -17,19 +17,20 @@ terraform {
   required_version = " >= 0.14.7"
   required_providers {
     google = {
-//      version = "~> 3.30"
+      version = "~> 3.58.0"
+
       source = "hashicorp/google"
     }
     google-beta = {
-//      version = "~> 3.57.0"
+      version = "~> 3.58.0"
       source = "hashicorp/google-beta"
     }
     null = {
-//      version = "~> 2.1"
+      version = "~> 2.1"
       source = "hashicorp/null"
     }
     random = {
-//      version = "~> 2.2"
+      version = "~> 2.2"
       source = "hashicorp/random"
     }
   }

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  description = "The project ID where app engine is created"
-  value       = module.app-engine-project.project_id
-}
+//output "project_id" {
+//  description = "The project ID where app engine is created"
+//  value       = module.app-engine-project.project_id
+//}
 
 output "app_name" {
   description = "Unique name of the app, usually apps/{PROJECT_ID}."

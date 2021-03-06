@@ -150,3 +150,13 @@ module "iap_bastion" {
   disk_size_gb = 5
 }
 
+
+module "app-engine" {
+  source = "../modules/app_engine"
+
+  billing_account = var.billing_account
+  namespace = var.namespace
+  org_id = var.organization_id
+  project_id = module.project-factory.project_id
+  vpc_access_connector_id = google_vpc_access_connector.serverless_vpc_connector.id
+}
