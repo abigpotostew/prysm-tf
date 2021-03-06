@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 terraform {
-  required_version = ">= 0.13"
-
+  required_version = " >= 0.14.7"
   required_providers {
     google = {
-      source  = "hashicorp/google"
-      version = ">= 3.50, < 4.0"
+//      version = "~> 3.30"
+      source = "hashicorp/google"
     }
     google-beta = {
-      source  = "hashicorp/google-beta"
-      version = ">= 3.50, < 4.0"
+//      version = "~> 3.57.0"
+      source = "hashicorp/google-beta"
     }
     null = {
-      source  = "hashicorp/null"
-      version = "~> 2.1"
+//      version = "~> 2.1"
+      source = "hashicorp/null"
     }
     random = {
-      source  = "hashicorp/random"
-      version = "~> 2.2"
+//      version = "~> 2.2"
+      source = "hashicorp/random"
     }
+  }
+  backend "gcs" {
+    bucket = "prysm-tfstate-8cf0"
+    prefix = "terraform/state"
+    //    credentials = "~/.config/gcloud/application_default_credentials.json"
   }
 }

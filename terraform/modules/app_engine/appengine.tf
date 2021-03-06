@@ -2,16 +2,25 @@ locals {
   appname="backend"
 }
 
+
 module "app-engine" {
-  source = "../project-factory/modules/app_engine"
-  project_id = module.project-factory.project_id
+  source = "terraform-google-modules/project-factory/google//modules/app_engine"
+  version = "10.1.1"
+
+  project_id  = module.project-factory.project_id
   location_id = var.location_id
 }
+
+//module "app-engine" {
+//  source = "../project-factory/modules/app_engine"
+//  project_id = module.project-factory.project_id
+//  location_id = var.location_id
+//}
 
 resource "google_storage_bucket_object" "object" {
   name = "hello-world.zip"
   bucket = module.app-engine.code_bucket
-  source = "../../hello-world.zip"
+  source = var
 }
 
 resource "google_app_engine_standard_app_version" "default" {
@@ -90,4 +99,8 @@ resource "google_app_engine_standard_app_version" "backend_v1" {
     //"projects/${module.project-factory.project_id}/locations/${var.region}/connectors/${module.sql_example_postgres_private_ip.connector_name}"
   }
   //todo pass in the private ip of the db
+}
+
+module "app-engine" {
+  source ="modules/app_engine"
 }

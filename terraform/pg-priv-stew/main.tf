@@ -1,26 +1,3 @@
-terraform {
-  required_version = "0.14.7"
-  required_providers {
-    google = {
-      version = "~> 3.30"
-    }
-    google-beta = {
-      version = "~> 3.57.0"
-    }
-    null = {
-      version = "~> 2.1"
-    }
-    random = {
-      version = "~> 2.2"
-    }
-  }
-  backend "gcs" {
-    bucket = "prysm-tfstate-8cf0"
-    prefix = "terraform/state"
-//    credentials = "~/.config/gcloud/application_default_credentials.json"
-  }
-}
-
 
 locals {
   credentials_file_path = var.credentials_path
@@ -172,3 +149,4 @@ module "iap_bastion" {
   members = var.db_bastion_members
   disk_size_gb = 5
 }
+
