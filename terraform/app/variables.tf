@@ -79,3 +79,9 @@ variable "db_machine_type"{
   default="db-f1-micro"
   description = "database machine type"
 }
+variable "env_var_map" {
+  type =map(string)
+  default = {}
+  description = "application environment variables"
+//  sensitive=true
+}

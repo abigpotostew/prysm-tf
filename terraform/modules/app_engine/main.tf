@@ -1,3 +1,7 @@
+provider "google"{
+  credentials = file(var.credentials_path)
+}
+
 locals {
   appname="backend"
 }
@@ -17,9 +21,9 @@ resource "google_app_engine_application" "main" {
 
 
 resource "google_storage_bucket_object" "object" {
-  name = "hello-world.zip"
-  bucket = google_app_engine_application.main
-  source = "../../hello-world.zip"
+  name = "app.zip"
+  bucket = google_app_engine_application.main.code_bucket
+  source = var.dist_archive
 }
 
 resource "google_app_engine_standard_app_version" "default" {
@@ -29,7 +33,7 @@ resource "google_app_engine_standard_app_version" "default" {
   project = var.location_id
 
   entrypoint {
-    shell = "node ./app.js"
+    shell = "node ./index.js"
   }
 
   deployment {
@@ -37,10 +41,8 @@ resource "google_app_engine_standard_app_version" "default" {
       source_url = "https://storage.googleapis.com/${google_app_engine_application.main.code_bucket}/${google_storage_bucket_object.object.name}"
     }
   }
+  env_variables = var.env_var_map
 
-  env_variables = {
-    port = "8080"
-  }
   automatic_scaling {
     max_concurrent_requests = 1
     min_idle_instances = 0
@@ -62,7 +64,7 @@ resource "google_app_engine_standard_app_version" "backend_v1" {
   project = var.location_id
 
   entrypoint {
-    shell = "node ./app.js"
+    shell = "node ./index.js"
   }
 
   deployment {
@@ -71,9 +73,7 @@ resource "google_app_engine_standard_app_version" "backend_v1" {
     }
   }
 
-  env_variables = {
-    port = "8080"
-  }
+  env_variables = var.env_var_map
 
   automatic_scaling {
     max_concurrent_requests = 3

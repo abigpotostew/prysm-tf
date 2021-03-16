@@ -1,4 +1,3 @@
-
 locals {
   credentials_file_path = var.credentials_path
   project_name = "prysm-${var.namespace}"
@@ -16,6 +15,7 @@ provider "google-beta" {
   credentials = file(local.credentials_file_path)
   region = var.region
   zone = var.zone
+  //  project = module.project-factory.project_id
 }
 provider "null" {
 }
@@ -30,16 +30,18 @@ module "project-factory" {
   name = local.project_name
   org_id = var.organization_id
   billing_account = var.billing_account
-  credentials_path = local.credentials_file_path
-  default_service_account = "deprivilege"
+//  credentials_path = local.credentials_file_path
+  default_service_account = "keep"
 
-//  folder_id=var.folder_id
+  //  folder_id=var.folder_id
 
   activate_apis = [
     "servicenetworking.googleapis.com",
     "compute.googleapis.com",
     "appengine.googleapis.com",
-    "vpcaccess.googleapis.com"
+    "vpcaccess.googleapis.com",
+    "iap.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
   ]
   activate_api_identities = [
     {
@@ -48,8 +50,15 @@ module "project-factory" {
         "roles/servicenetworking.serviceAgent",
       ]
     },
+//    {
+//      api = "appengine.googleapis.com"
+//      roles = [
+//        "roles/appengine.serviceAgent",
+//      ]
+//    },
   ]
 }
+
 resource "random_id" "rand_suffix" {
   byte_length = 2
 }
@@ -57,37 +66,16 @@ resource "random_id" "rand_suffix" {
 locals {
   project_id = module.project-factory.project_id
   db_instance_name = format("%s-%s", var.namespace, random_id.rand_suffix.hex)
-  private_network_name = "private-network-${random_id.rand_suffix.hex}"
-  private_ip_name = "private-ip-${random_id.rand_suffix.hex}"
+  //  private_network_name = "private-network-${random_id.rand_suffix.hex}"
+  //  private_ip_name = "private-ip-${random_id.rand_suffix.hex}"
 }
 
-# ------------------------------------------------------------------------------
-# CREATE COMPUTE NETWORKS
-# ------------------------------------------------------------------------------
-# Simple network, auto-creates subnetworks
-resource "google_compute_network" "private_network" {
-  provider = google-beta
-  name = local.private_network_name
-  project =  module.project-factory.project_id
-}
+module "vpc" {
+  source = "../modules/vpc"
 
-# Reserve global internal address range for the peering
-resource "google_compute_global_address" "private_ip_address" {
-  provider = google-beta
-  name = local.private_ip_name
-  purpose = "VPC_PEERING"
-  address_type = "INTERNAL"
-  prefix_length = 16
-  network = google_compute_network.private_network.self_link
-}
-
-# Establish VPC network peering connection using the reserved address range
-resource "google_service_networking_connection" "private_vpc_connection" {
-  provider = google-beta
-  network = google_compute_network.private_network.self_link
-  service = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [
-    google_compute_global_address.private_ip_address.name]
+  namespace = var.namespace
+  project_id = module.project-factory.project_id
+  //  vpc_access_connector_id = google_vpc_access_connector.serverless_vpc_connector.id
 }
 
 
@@ -96,7 +84,6 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 # ------------------------------------------------------------------------------
 module "sql_example_postgres_private_ip" {
 
-  //  source = "../terraform-google-sql" // todo get this from github directly
   source = "github.com/gruntwork-io/terraform-google-sql.git//modules/cloud-sql?ref=v0.4.0"
 
   # insert the 6 required variables here
@@ -112,29 +99,22 @@ module "sql_example_postgres_private_ip" {
   master_user_name = var.master_user_name
   master_user_password = var.master_user_password
 
-  private_network = google_compute_network.private_network.self_link
+
+  private_network = module.vpc.private_network.self_link
+  // google_compute_network.private_network.self_link
 
   # Wait for the vpc connection to complete
   dependencies = [
-    google_service_networking_connection.private_vpc_connection.network]
+    module.vpc.private_vpc_connection.network]
 
   custom_labels = {
     test-id = "postgres-private-ip-example"
   }
 
+  //maybe not needed here
   //  providers = {
   //    google-beta = google-beta
   //  }
-}
-
-resource "google_vpc_access_connector" "serverless_vpc_connector" {
-  provider = google-beta
-  name = "prysm-priv-vpc-connector"
-  region = var.region
-  ip_cidr_range = "72.29.167.0/28"
-  //pick a random ip range???
-  network = google_compute_network.private_network.name
-  project = module.project-factory.project_id
 }
 
 
@@ -143,20 +123,35 @@ module "iap_bastion" {
 
   project = module.project-factory.project_id
   zone = var.zone
-  network = google_compute_network.private_network.self_link
-  subnet = "10.168.0.0/20"
+  network = module.vpc.private_network.self_link
+  subnet = module.vpc.app_subnet
+  //data.google_compute_subnetwork.app_subnet.self_link
+  //  subnet = "10.168.0.0/20"
   //todo figure out how to get this from the region, since it's auto created
   members = var.db_bastion_members
-  disk_size_gb = 5
+  disk_size_gb = 23
 }
 
 
 module "app-engine" {
   source = "../modules/app_engine"
 
+  dist_archive = abspath("../../app.zip")
+
   billing_account = var.billing_account
   namespace = var.namespace
   org_id = var.organization_id
   project_id = module.project-factory.project_id
-  vpc_access_connector_id = google_vpc_access_connector.serverless_vpc_connector.id
+  vpc_access_connector_id = module.vpc.serverless_vpc_connector_id
+
+  env_var_map = merge(var.env_var_map,
+  { POSTGRESQL_HOST = module.sql_example_postgres_private_ip.master_private_ip_address })
+
+  credentials_path = var.credentials_path
+//  providers {
+//
+//    credentials = file(local.credentials_file_path)
+//    region = var.region
+//    zone = var.zone
+//  }
 }

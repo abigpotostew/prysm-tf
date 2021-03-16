@@ -21,16 +21,16 @@
 
 output "app_name" {
   description = "Unique name of the app, usually apps/{PROJECT_ID}."
-  value       = module.app-engine.name
+  value       = google_app_engine_application.main.name
 }
 
 output "default_hostname" {
   description = "The default hostname for this app."
-  value       = module.app-engine.default_hostname
+  value       = google_app_engine_application.main.default_hostname
 }
 
 output "location_id" {
   description = "The location app engine is serving from"
-  value       = module.app-engine.location_id
+  value       = google_app_engine_application.main.location_id
 }
 

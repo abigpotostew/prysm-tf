@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+variable dist_archive {
+  type = string
+  description = "the distributed archive application"
+}
 variable "namespace" {
   description = "project namespace"
   type = string
@@ -81,4 +84,13 @@ variable "feature_settings" {
   description = "A list of maps of optional settings to configure specific App Engine features."
   type        = list(object({ split_health_checks = bool }))
   default     = [{ split_health_checks = true }]
+}
+
+variable "env_var_map" {
+  type =map(string)
+  default = {}
+}
+
+variable "credentials_path" {
+  type=string
 }

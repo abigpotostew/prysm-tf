@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2018 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,37 +14,31 @@
  * limitations under the License.
  */
 
-variable "org_id" {
-  type = string
+variable "location_id" {
+  description = "The location to serve the app from."
+  default     = "us-west2"
 }
 
-variable "folder_id" {
-  type = string
+variable "namespace" {
+  description = "network namespace prefix"
+  type=string
 }
 
-variable "billing_account" {
-  type        = string
-  description = "Billing account ID."
+//variable "vpc_access_connector_id" {
+//  description="google_vpc_access_connector.serverless_vpc_connector.id"
+//  type=string
+//}
+variable "project_id" {
+  type=string
 }
+variable "region" {
 
-variable "random_string_for_testing" {
-  type        = string
-  description = "A random string of characters to be appended to resource names to ensure uniqueness"
+  default = "us-west2"
 }
-
-variable "domain" {
-  type = string
+variable "zone" {
+  default = "us-west2-a"
 }
-
-variable "group_role" {
-  default = "roles/viewer"
-  type    = string
-}
-
-variable "shared_vpc" {
-  type = string
-}
-
-variable "gsuite_admin_account" {
-  type = string
+variable "credentials_path"{
+  type=string
+  default="~/.config/gcloud/application_default_credentials.json"
 }
